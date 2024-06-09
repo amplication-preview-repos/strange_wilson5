@@ -1,0 +1,75 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Customer {
+  address   String?
+  createdAt DateTime @default(now())
+  email     String?
+  id        String   @id @default(cuid())
+  name      String?
+  orders    Order[]
+  phone     String?
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  category    String?
+  createdAt   DateTime    @default(now())
+  description String?
+  id          String      @id @default(cuid())
+  inStock     Boolean?
+  name        String?
+  orderItems  OrderItem[]
+  price       Float?
+  updatedAt   DateTime    @updatedAt
+}
+
+model Payment {
+  amount        Float?
+  createdAt     DateTime                  @default(now())
+  id            String                    @id @default(cuid())
+  order         Order?                    @relation(fields: [orderId], references: [id])
+  orderId       String?
+  paymentDate   DateTime?
+  paymentMethod EnumPaymentPaymentMethod?
+  updatedAt     DateTime                  @updatedAt
+}
+
+model Order {
+  createdAt   DateTime         @default(now())
+  customer    Customer?        @relation(fields: [customerId], references: [id])
+  customerId  String?
+  id          String           @id @default(cuid())
+  orderDate   DateTime?
+  orderItems  OrderItem[]
+  payments    Payment[]
+  status      EnumOrderStatus?
+  totalAmount Float?
+  updatedAt   DateTime         @updatedAt
+}
+
+model OrderItem {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
+  price     Float?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  quantity  Int?
+  updatedAt DateTime @updatedAt
+}
+
+enum EnumPaymentPaymentMethod {
+  Option1
+}
+
+enum EnumOrderStatus {
+  Option1
+}
