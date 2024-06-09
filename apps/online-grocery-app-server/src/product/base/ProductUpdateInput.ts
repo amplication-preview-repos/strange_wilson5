@@ -18,8 +18,9 @@ import {
   ValidateNested,
   IsNumber,
 } from "class-validator";
-import { OrderItemUpdateManyWithoutProductsInput } from "./OrderItemUpdateManyWithoutProductsInput";
+import { InventoryUpdateManyWithoutProductsInput } from "./InventoryUpdateManyWithoutProductsInput";
 import { Type } from "class-transformer";
+import { OrderItemUpdateManyWithoutProductsInput } from "./OrderItemUpdateManyWithoutProductsInput";
 
 @InputType()
 class ProductUpdateInput {
@@ -55,6 +56,18 @@ class ProductUpdateInput {
     nullable: true,
   })
   inStock?: boolean | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => InventoryUpdateManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => InventoryUpdateManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => InventoryUpdateManyWithoutProductsInput, {
+    nullable: true,
+  })
+  inventories?: InventoryUpdateManyWithoutProductsInput;
 
   @ApiProperty({
     required: false,

@@ -16,6 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
+import { InventoryListRelationFilter } from "../../inventory/base/InventoryListRelationFilter";
 import { OrderItemListRelationFilter } from "../../orderItem/base/OrderItemListRelationFilter";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
 
@@ -64,6 +65,18 @@ class ProductWhereInput {
     nullable: true,
   })
   inStock?: BooleanNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => InventoryListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => InventoryListRelationFilter)
+  @IsOptional()
+  @Field(() => InventoryListRelationFilter, {
+    nullable: true,
+  })
+  inventories?: InventoryListRelationFilter;
 
   @ApiProperty({
     required: false,

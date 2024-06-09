@@ -23,7 +23,9 @@ const CREATE_INPUT = {
   email: "exampleEmail",
   id: "exampleId",
   name: "exampleName",
+  otp: 42,
   phone: "examplePhone",
+  phoneNumber: "examplePhoneNumber",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
@@ -32,7 +34,9 @@ const CREATE_RESULT = {
   email: "exampleEmail",
   id: "exampleId",
   name: "exampleName",
+  otp: 42,
   phone: "examplePhone",
+  phoneNumber: "examplePhoneNumber",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
@@ -42,7 +46,9 @@ const FIND_MANY_RESULT = [
     email: "exampleEmail",
     id: "exampleId",
     name: "exampleName",
+    otp: 42,
     phone: "examplePhone",
+    phoneNumber: "examplePhoneNumber",
     updatedAt: new Date(),
   },
 ];
@@ -52,7 +58,9 @@ const FIND_ONE_RESULT = {
   email: "exampleEmail",
   id: "exampleId",
   name: "exampleName",
+  otp: 42,
   phone: "examplePhone",
+  phoneNumber: "examplePhoneNumber",
   updatedAt: new Date(),
 };
 

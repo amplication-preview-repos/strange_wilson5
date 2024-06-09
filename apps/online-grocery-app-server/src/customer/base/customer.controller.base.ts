@@ -41,7 +41,9 @@ export class CustomerControllerBase {
         email: true,
         id: true,
         name: true,
+        otp: true,
         phone: true,
+        phoneNumber: true,
         updatedAt: true,
       },
     });
@@ -60,7 +62,9 @@ export class CustomerControllerBase {
         email: true,
         id: true,
         name: true,
+        otp: true,
         phone: true,
+        phoneNumber: true,
         updatedAt: true,
       },
     });
@@ -80,7 +84,9 @@ export class CustomerControllerBase {
         email: true,
         id: true,
         name: true,
+        otp: true,
         phone: true,
+        phoneNumber: true,
         updatedAt: true,
       },
     });
@@ -109,7 +115,9 @@ export class CustomerControllerBase {
           email: true,
           id: true,
           name: true,
+          otp: true,
           phone: true,
+          phoneNumber: true,
           updatedAt: true,
         },
       });
@@ -138,7 +146,9 @@ export class CustomerControllerBase {
           email: true,
           id: true,
           name: true,
+          otp: true,
           phone: true,
+          phoneNumber: true,
           updatedAt: true,
         },
       });
@@ -170,11 +180,16 @@ export class CustomerControllerBase {
           },
         },
 
+        customerRef: true,
         id: true,
         orderDate: true,
+        orderState: true,
+        orderStatus: true,
+        state: true,
         status: true,
         totalAmount: true,
         updatedAt: true,
+        user: true,
       },
     });
     if (results === null) {

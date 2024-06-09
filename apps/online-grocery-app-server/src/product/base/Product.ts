@@ -20,6 +20,7 @@ import {
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { Inventory } from "../../inventory/base/Inventory";
 import { OrderItem } from "../../orderItem/base/OrderItem";
 
 @ObjectType()
@@ -72,6 +73,15 @@ class Product {
     nullable: true,
   })
   inStock!: boolean | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Inventory],
+  })
+  @ValidateNested()
+  @Type(() => Inventory)
+  @IsOptional()
+  inventories?: Array<Inventory>;
 
   @ApiProperty({
     required: false,

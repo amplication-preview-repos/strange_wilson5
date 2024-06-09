@@ -5,5 +5,7 @@ export type CustomerUpdateInput = {
   email?: string | null;
   name?: string | null;
   orders?: OrderUpdateManyWithoutCustomersInput;
+  otp?: number | null;
   phone?: string | null;
+  phoneNumber?: string | null;
 };

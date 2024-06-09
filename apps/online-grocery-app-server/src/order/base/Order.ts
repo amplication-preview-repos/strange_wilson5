@@ -21,8 +21,12 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Customer } from "../../customer/base/Customer";
+import { Delivery } from "../../delivery/base/Delivery";
 import { OrderItem } from "../../orderItem/base/OrderItem";
+import { EnumOrderOrderState } from "./EnumOrderOrderState";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { Payment } from "../../payment/base/Payment";
+import { EnumOrderState } from "./EnumOrderState";
 import { EnumOrderStatus } from "./EnumOrderStatus";
 
 @ObjectType()
@@ -43,6 +47,26 @@ class Order {
   @Type(() => Customer)
   @IsOptional()
   customer?: Customer | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  customerRef!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Delivery],
+  })
+  @ValidateNested()
+  @Type(() => Delivery)
+  @IsOptional()
+  deliveries?: Array<Delivery>;
 
   @ApiProperty({
     required: true,
@@ -74,12 +98,45 @@ class Order {
 
   @ApiProperty({
     required: false,
+    enum: EnumOrderOrderState,
+  })
+  @IsEnum(EnumOrderOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderOrderState, {
+    nullable: true,
+  })
+  orderState?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
     type: () => [Payment],
   })
   @ValidateNested()
   @Type(() => Payment)
   @IsOptional()
   payments?: Array<Payment>;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderState,
+  })
+  @IsEnum(EnumOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderState, {
+    nullable: true,
+  })
+  state?: "Option1" | null;
 
   @ApiProperty({
     required: false,
@@ -110,6 +167,17 @@ class Order {
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  user!: string | null;
 }
 
 export { Order as Order };

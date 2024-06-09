@@ -20,6 +20,8 @@ import { OrderFindUniqueArgs } from "./OrderFindUniqueArgs";
 import { CreateOrderArgs } from "./CreateOrderArgs";
 import { UpdateOrderArgs } from "./UpdateOrderArgs";
 import { DeleteOrderArgs } from "./DeleteOrderArgs";
+import { DeliveryFindManyArgs } from "../../delivery/base/DeliveryFindManyArgs";
+import { Delivery } from "../../delivery/base/Delivery";
 import { OrderItemFindManyArgs } from "../../orderItem/base/OrderItemFindManyArgs";
 import { OrderItem } from "../../orderItem/base/OrderItem";
 import { PaymentFindManyArgs } from "../../payment/base/PaymentFindManyArgs";
@@ -112,6 +114,20 @@ export class OrderResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Delivery], { name: "deliveries" })
+  async findDeliveries(
+    @graphql.Parent() parent: Order,
+    @graphql.Args() args: DeliveryFindManyArgs
+  ): Promise<Delivery[]> {
+    const results = await this.service.findDeliveries(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 
   @graphql.ResolveField(() => [OrderItem], { name: "orderItems" })

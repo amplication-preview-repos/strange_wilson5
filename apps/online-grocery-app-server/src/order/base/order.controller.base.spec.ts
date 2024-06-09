@@ -19,33 +19,41 @@ const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
   createdAt: new Date(),
+  customerRef: "exampleCustomerRef",
   id: "exampleId",
   orderDate: new Date(),
   totalAmount: 42.42,
   updatedAt: new Date(),
+  user: "exampleUser",
 };
 const CREATE_RESULT = {
   createdAt: new Date(),
+  customerRef: "exampleCustomerRef",
   id: "exampleId",
   orderDate: new Date(),
   totalAmount: 42.42,
   updatedAt: new Date(),
+  user: "exampleUser",
 };
 const FIND_MANY_RESULT = [
   {
     createdAt: new Date(),
+    customerRef: "exampleCustomerRef",
     id: "exampleId",
     orderDate: new Date(),
     totalAmount: 42.42,
     updatedAt: new Date(),
+    user: "exampleUser",
   },
 ];
 const FIND_ONE_RESULT = {
   createdAt: new Date(),
+  customerRef: "exampleCustomerRef",
   id: "exampleId",
   orderDate: new Date(),
   totalAmount: 42.42,
   updatedAt: new Date(),
+  user: "exampleUser",
 };
 
 const service = {

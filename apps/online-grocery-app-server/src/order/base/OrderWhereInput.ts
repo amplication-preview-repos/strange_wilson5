@@ -14,10 +14,15 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
 import { ValidateNested, IsOptional, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { DeliveryListRelationFilter } from "../../delivery/base/DeliveryListRelationFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { OrderItemListRelationFilter } from "../../orderItem/base/OrderItemListRelationFilter";
+import { EnumOrderOrderState } from "./EnumOrderOrderState";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { PaymentListRelationFilter } from "../../payment/base/PaymentListRelationFilter";
+import { EnumOrderState } from "./EnumOrderState";
 import { EnumOrderStatus } from "./EnumOrderStatus";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
 
@@ -34,6 +39,29 @@ class OrderWhereInput {
     nullable: true,
   })
   customer?: CustomerWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  customerRef?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => DeliveryListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => DeliveryListRelationFilter)
+  @IsOptional()
+  @Field(() => DeliveryListRelationFilter, {
+    nullable: true,
+  })
+  deliveries?: DeliveryListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -71,6 +99,28 @@ class OrderWhereInput {
 
   @ApiProperty({
     required: false,
+    enum: EnumOrderOrderState,
+  })
+  @IsEnum(EnumOrderOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderOrderState, {
+    nullable: true,
+  })
+  orderState?: "Option1";
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1";
+
+  @ApiProperty({
+    required: false,
     type: () => PaymentListRelationFilter,
   })
   @ValidateNested()
@@ -80,6 +130,17 @@ class OrderWhereInput {
     nullable: true,
   })
   payments?: PaymentListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderState,
+  })
+  @IsEnum(EnumOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderState, {
+    nullable: true,
+  })
+  state?: "Option1";
 
   @ApiProperty({
     required: false,
@@ -102,6 +163,17 @@ class OrderWhereInput {
     nullable: true,
   })
   totalAmount?: FloatNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
+  user?: StringNullableFilter;
 }
 
 export { OrderWhereInput as OrderWhereInput };

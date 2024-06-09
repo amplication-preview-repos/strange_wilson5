@@ -15,13 +15,18 @@ import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqu
 import {
   ValidateNested,
   IsOptional,
+  IsString,
   IsDate,
   IsEnum,
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { DeliveryCreateNestedManyWithoutOrdersInput } from "./DeliveryCreateNestedManyWithoutOrdersInput";
 import { OrderItemCreateNestedManyWithoutOrdersInput } from "./OrderItemCreateNestedManyWithoutOrdersInput";
+import { EnumOrderOrderState } from "./EnumOrderOrderState";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { PaymentCreateNestedManyWithoutOrdersInput } from "./PaymentCreateNestedManyWithoutOrdersInput";
+import { EnumOrderState } from "./EnumOrderState";
 import { EnumOrderStatus } from "./EnumOrderStatus";
 
 @InputType()
@@ -37,6 +42,29 @@ class OrderCreateInput {
     nullable: true,
   })
   customer?: CustomerWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  customerRef?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => DeliveryCreateNestedManyWithoutOrdersInput,
+  })
+  @ValidateNested()
+  @Type(() => DeliveryCreateNestedManyWithoutOrdersInput)
+  @IsOptional()
+  @Field(() => DeliveryCreateNestedManyWithoutOrdersInput, {
+    nullable: true,
+  })
+  deliveries?: DeliveryCreateNestedManyWithoutOrdersInput;
 
   @ApiProperty({
     required: false,
@@ -63,6 +91,28 @@ class OrderCreateInput {
 
   @ApiProperty({
     required: false,
+    enum: EnumOrderOrderState,
+  })
+  @IsEnum(EnumOrderOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderOrderState, {
+    nullable: true,
+  })
+  orderState?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
     type: () => PaymentCreateNestedManyWithoutOrdersInput,
   })
   @ValidateNested()
@@ -72,6 +122,17 @@ class OrderCreateInput {
     nullable: true,
   })
   payments?: PaymentCreateNestedManyWithoutOrdersInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderState,
+  })
+  @IsEnum(EnumOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderState, {
+    nullable: true,
+  })
+  state?: "Option1" | null;
 
   @ApiProperty({
     required: false,
@@ -94,6 +155,17 @@ class OrderCreateInput {
     nullable: true,
   })
   totalAmount?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  user?: string | null;
 }
 
 export { OrderCreateInput as OrderCreateInput };

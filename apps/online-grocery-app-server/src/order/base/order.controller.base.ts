@@ -22,6 +22,9 @@ import { Order } from "./Order";
 import { OrderFindManyArgs } from "./OrderFindManyArgs";
 import { OrderWhereUniqueInput } from "./OrderWhereUniqueInput";
 import { OrderUpdateInput } from "./OrderUpdateInput";
+import { DeliveryFindManyArgs } from "../../delivery/base/DeliveryFindManyArgs";
+import { Delivery } from "../../delivery/base/Delivery";
+import { DeliveryWhereUniqueInput } from "../../delivery/base/DeliveryWhereUniqueInput";
 import { OrderItemFindManyArgs } from "../../orderItem/base/OrderItemFindManyArgs";
 import { OrderItem } from "../../orderItem/base/OrderItem";
 import { OrderItemWhereUniqueInput } from "../../orderItem/base/OrderItemWhereUniqueInput";
@@ -53,11 +56,16 @@ export class OrderControllerBase {
           },
         },
 
+        customerRef: true,
         id: true,
         orderDate: true,
+        orderState: true,
+        orderStatus: true,
+        state: true,
         status: true,
         totalAmount: true,
         updatedAt: true,
+        user: true,
       },
     });
   }
@@ -78,11 +86,16 @@ export class OrderControllerBase {
           },
         },
 
+        customerRef: true,
         id: true,
         orderDate: true,
+        orderState: true,
+        orderStatus: true,
+        state: true,
         status: true,
         totalAmount: true,
         updatedAt: true,
+        user: true,
       },
     });
   }
@@ -104,11 +117,16 @@ export class OrderControllerBase {
           },
         },
 
+        customerRef: true,
         id: true,
         orderDate: true,
+        orderState: true,
+        orderStatus: true,
+        state: true,
         status: true,
         totalAmount: true,
         updatedAt: true,
+        user: true,
       },
     });
     if (result === null) {
@@ -147,11 +165,16 @@ export class OrderControllerBase {
             },
           },
 
+          customerRef: true,
           id: true,
           orderDate: true,
+          orderState: true,
+          orderStatus: true,
+          state: true,
           status: true,
           totalAmount: true,
           updatedAt: true,
+          user: true,
         },
       });
     } catch (error) {
@@ -182,11 +205,16 @@ export class OrderControllerBase {
             },
           },
 
+          customerRef: true,
           id: true,
           orderDate: true,
+          orderState: true,
+          orderStatus: true,
+          state: true,
           status: true,
           totalAmount: true,
           updatedAt: true,
+          user: true,
         },
       });
     } catch (error) {
@@ -197,6 +225,89 @@ export class OrderControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/:id/deliveries")
+  @ApiNestedQuery(DeliveryFindManyArgs)
+  async findDeliveries(
+    @common.Req() request: Request,
+    @common.Param() params: OrderWhereUniqueInput
+  ): Promise<Delivery[]> {
+    const query = plainToClass(DeliveryFindManyArgs, request.query);
+    const results = await this.service.findDeliveries(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+
+        order: {
+          select: {
+            id: true,
+          },
+        },
+
+        partner: true,
+        status: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/deliveries")
+  async connectDeliveries(
+    @common.Param() params: OrderWhereUniqueInput,
+    @common.Body() body: DeliveryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      deliveries: {
+        connect: body,
+      },
+    };
+    await this.service.updateOrder({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/deliveries")
+  async updateDeliveries(
+    @common.Param() params: OrderWhereUniqueInput,
+    @common.Body() body: DeliveryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      deliveries: {
+        set: body,
+      },
+    };
+    await this.service.updateOrder({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/deliveries")
+  async disconnectDeliveries(
+    @common.Param() params: OrderWhereUniqueInput,
+    @common.Body() body: DeliveryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      deliveries: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateOrder({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 
   @common.Get("/:id/orderItems")

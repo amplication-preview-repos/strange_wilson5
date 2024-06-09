@@ -12,8 +12,8 @@ import {
   ReferenceField,
 } from "react-admin";
 
-import { ORDER_TITLE_FIELD } from "../order/OrderTitle";
 import { PRODUCT_TITLE_FIELD } from "./ProductTitle";
+import { ORDER_TITLE_FIELD } from "../order/OrderTitle";
 
 export const ProductShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -27,6 +27,25 @@ export const ProductShow = (props: ShowProps): React.ReactElement => {
         <TextField label="name" source="name" />
         <TextField label="price" source="price" />
         <DateField source="updatedAt" label="Updated At" />
+        <ReferenceManyField
+          reference="Inventory"
+          target="productId"
+          label="Inventories"
+        >
+          <Datagrid rowClick="show">
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="ID" source="id" />
+            <ReferenceField
+              label="product"
+              source="product.id"
+              reference="Product"
+            >
+              <TextField source={PRODUCT_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField label="quantity" source="quantity" />
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
         <ReferenceManyField
           reference="OrderItem"
           target="productId"

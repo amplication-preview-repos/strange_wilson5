@@ -15,13 +15,18 @@ import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqu
 import {
   ValidateNested,
   IsOptional,
+  IsString,
   IsDate,
   IsEnum,
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { DeliveryUpdateManyWithoutOrdersInput } from "./DeliveryUpdateManyWithoutOrdersInput";
 import { OrderItemUpdateManyWithoutOrdersInput } from "./OrderItemUpdateManyWithoutOrdersInput";
+import { EnumOrderOrderState } from "./EnumOrderOrderState";
+import { EnumOrderOrderStatus } from "./EnumOrderOrderStatus";
 import { PaymentUpdateManyWithoutOrdersInput } from "./PaymentUpdateManyWithoutOrdersInput";
+import { EnumOrderState } from "./EnumOrderState";
 import { EnumOrderStatus } from "./EnumOrderStatus";
 
 @InputType()
@@ -37,6 +42,29 @@ class OrderUpdateInput {
     nullable: true,
   })
   customer?: CustomerWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  customerRef?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => DeliveryUpdateManyWithoutOrdersInput,
+  })
+  @ValidateNested()
+  @Type(() => DeliveryUpdateManyWithoutOrdersInput)
+  @IsOptional()
+  @Field(() => DeliveryUpdateManyWithoutOrdersInput, {
+    nullable: true,
+  })
+  deliveries?: DeliveryUpdateManyWithoutOrdersInput;
 
   @ApiProperty({
     required: false,
@@ -63,6 +91,28 @@ class OrderUpdateInput {
 
   @ApiProperty({
     required: false,
+    enum: EnumOrderOrderState,
+  })
+  @IsEnum(EnumOrderOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderOrderState, {
+    nullable: true,
+  })
+  orderState?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderOrderStatus,
+  })
+  @IsEnum(EnumOrderOrderStatus)
+  @IsOptional()
+  @Field(() => EnumOrderOrderStatus, {
+    nullable: true,
+  })
+  orderStatus?: "Option1" | null;
+
+  @ApiProperty({
+    required: false,
     type: () => PaymentUpdateManyWithoutOrdersInput,
   })
   @ValidateNested()
@@ -72,6 +122,17 @@ class OrderUpdateInput {
     nullable: true,
   })
   payments?: PaymentUpdateManyWithoutOrdersInput;
+
+  @ApiProperty({
+    required: false,
+    enum: EnumOrderState,
+  })
+  @IsEnum(EnumOrderState)
+  @IsOptional()
+  @Field(() => EnumOrderState, {
+    nullable: true,
+  })
+  state?: "Option1" | null;
 
   @ApiProperty({
     required: false,
@@ -94,6 +155,17 @@ class OrderUpdateInput {
     nullable: true,
   })
   totalAmount?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  user?: string | null;
 }
 
 export { OrderUpdateInput as OrderUpdateInput };

@@ -28,11 +28,16 @@ export const OrderList = (props: ListProps): React.ReactElement => {
         >
           <TextField source={CUSTOMER_TITLE_FIELD} />
         </ReferenceField>
+        <TextField label="customerRef" source="customerRef" />
         <TextField label="ID" source="id" />
         <TextField label="orderDate" source="orderDate" />
+        <TextField label="orderState" source="orderState" />
+        <TextField label="orderStatus" source="orderStatus" />
+        <TextField label="state" source="state" />
         <TextField label="status" source="status" />
         <TextField label="totalAmount" source="totalAmount" />
         <DateField source="updatedAt" label="Updated At" />
+        <TextField label="user" source="user" />
       </Datagrid>
     </List>
   );

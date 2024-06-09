@@ -5,5 +5,7 @@ export type CustomerCreateInput = {
   email?: string | null;
   name?: string | null;
   orders?: OrderCreateNestedManyWithoutCustomersInput;
+  otp?: number | null;
   phone?: string | null;
+  phoneNumber?: string | null;
 };

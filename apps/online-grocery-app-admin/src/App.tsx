@@ -13,18 +13,30 @@ import { ProductList } from "./product/ProductList";
 import { ProductCreate } from "./product/ProductCreate";
 import { ProductEdit } from "./product/ProductEdit";
 import { ProductShow } from "./product/ProductShow";
-import { PaymentList } from "./payment/PaymentList";
-import { PaymentCreate } from "./payment/PaymentCreate";
-import { PaymentEdit } from "./payment/PaymentEdit";
-import { PaymentShow } from "./payment/PaymentShow";
 import { OrderList } from "./order/OrderList";
 import { OrderCreate } from "./order/OrderCreate";
 import { OrderEdit } from "./order/OrderEdit";
 import { OrderShow } from "./order/OrderShow";
+import { PaymentList } from "./payment/PaymentList";
+import { PaymentCreate } from "./payment/PaymentCreate";
+import { PaymentEdit } from "./payment/PaymentEdit";
+import { PaymentShow } from "./payment/PaymentShow";
 import { OrderItemList } from "./orderItem/OrderItemList";
 import { OrderItemCreate } from "./orderItem/OrderItemCreate";
 import { OrderItemEdit } from "./orderItem/OrderItemEdit";
 import { OrderItemShow } from "./orderItem/OrderItemShow";
+import { InventoryList } from "./inventory/InventoryList";
+import { InventoryCreate } from "./inventory/InventoryCreate";
+import { InventoryEdit } from "./inventory/InventoryEdit";
+import { InventoryShow } from "./inventory/InventoryShow";
+import { AdminList } from "./admin/AdminList";
+import { AdminCreate } from "./admin/AdminCreate";
+import { AdminEdit } from "./admin/AdminEdit";
+import { AdminShow } from "./admin/AdminShow";
+import { DeliveryList } from "./delivery/DeliveryList";
+import { DeliveryCreate } from "./delivery/DeliveryCreate";
+import { DeliveryEdit } from "./delivery/DeliveryEdit";
+import { DeliveryShow } from "./delivery/DeliveryShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -66,13 +78,6 @@ const App = (): React.ReactElement => {
           show={ProductShow}
         />
         <Resource
-          name="Payment"
-          list={PaymentList}
-          edit={PaymentEdit}
-          create={PaymentCreate}
-          show={PaymentShow}
-        />
-        <Resource
           name="Order"
           list={OrderList}
           edit={OrderEdit}
@@ -80,11 +85,39 @@ const App = (): React.ReactElement => {
           show={OrderShow}
         />
         <Resource
+          name="Payment"
+          list={PaymentList}
+          edit={PaymentEdit}
+          create={PaymentCreate}
+          show={PaymentShow}
+        />
+        <Resource
           name="OrderItem"
           list={OrderItemList}
           edit={OrderItemEdit}
           create={OrderItemCreate}
           show={OrderItemShow}
+        />
+        <Resource
+          name="Inventory"
+          list={InventoryList}
+          edit={InventoryEdit}
+          create={InventoryCreate}
+          show={InventoryShow}
+        />
+        <Resource
+          name="Admin"
+          list={AdminList}
+          edit={AdminEdit}
+          create={AdminCreate}
+          show={AdminShow}
+        />
+        <Resource
+          name="Delivery"
+          list={DeliveryList}
+          edit={DeliveryEdit}
+          create={DeliveryCreate}
+          show={DeliveryShow}
         />
       </Admin>
     </div>
