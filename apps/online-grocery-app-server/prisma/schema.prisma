@@ -1,0 +1,132 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Customer {
+  address     String?
+  createdAt   DateTime @default(now())
+  email       String?
+  id          String   @id @default(cuid())
+  name        String?
+  orders      Order[]
+  otp         Int?
+  phone       String?
+  phoneNumber String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  category    String?
+  createdAt   DateTime    @default(now())
+  description String?
+  id          String      @id @default(cuid())
+  inStock     Boolean?
+  inventories Inventory[]
+  name        String?
+  orderItems  OrderItem[]
+  price       Float?
+  updatedAt   DateTime    @updatedAt
+}
+
+model Order {
+  createdAt   DateTime              @default(now())
+  customer    Customer?             @relation(fields: [customerId], references: [id])
+  customerId  String?
+  customerRef String?
+  deliveries  Delivery[]
+  id          String                @id @default(cuid())
+  orderDate   DateTime?
+  orderItems  OrderItem[]
+  orderState  EnumOrderOrderState?
+  orderStatus EnumOrderOrderStatus?
+  payments    Payment[]
+  state       EnumOrderState?
+  status      EnumOrderStatus?
+  totalAmount Float?
+  updatedAt   DateTime              @updatedAt
+  user        String?
+}
+
+model Payment {
+  amount        Float?
+  createdAt     DateTime                  @default(now())
+  id            String                    @id @default(cuid())
+  order         Order?                    @relation(fields: [orderId], references: [id])
+  orderId       String?
+  paymentDate   DateTime?
+  paymentMethod EnumPaymentPaymentMethod?
+  updatedAt     DateTime                  @updatedAt
+}
+
+model OrderItem {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
+  price     Float?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  quantity  Int?
+  updatedAt DateTime @updatedAt
+}
+
+model Inventory {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  quantity  Int?
+  updatedAt DateTime @updatedAt
+}
+
+model Admin {
+  createdAt DateTime       @default(now())
+  email     String?
+  id        String         @id @default(cuid())
+  name      String?
+  role      EnumAdminRole?
+  updatedAt DateTime       @updatedAt
+}
+
+model Delivery {
+  createdAt DateTime            @default(now())
+  id        String              @id @default(cuid())
+  order     Order?              @relation(fields: [orderId], references: [id])
+  orderId   String?
+  partner   String?
+  status    EnumDeliveryStatus?
+  updatedAt DateTime            @updatedAt
+}
+
+enum EnumOrderOrderState {
+  Option1
+}
+
+enum EnumOrderOrderStatus {
+  Option1
+}
+
+enum EnumOrderState {
+  Option1
+}
+
+enum EnumOrderStatus {
+  Option1
+}
+
+enum EnumPaymentPaymentMethod {
+  Option1
+}
+
+enum EnumAdminRole {
+  Option1
+}
+
+enum EnumDeliveryStatus {
+  Option1
+}
